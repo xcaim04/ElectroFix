@@ -50,8 +50,20 @@ export default function OrderForm() {
 
   return (
     <section className="tarjeta estrecha">
-      <h1>Nueva orden</h1>
+      <span className="eyebrow">Recepción · Fase 1</span>
+      <h1>Nueva orden de reparación</h1>
       <p>La orden se crea siempre en etapa <strong>solicitada</strong>.</p>
+
+      <div className="pasos">
+        <span className="paso activo"><span className="paso-numero">1</span> Cliente</span>
+        <span className="paso"><span className="paso-numero">2</span> Equipo</span>
+        <span className="paso"><span className="paso-numero">3</span> Falla y fotos</span>
+      </div>
+
+      <div className="callout">
+        <strong>Estado inicial inmutable.</strong> El servidor fuerza la etapa <strong>solicitada</strong> al crear la orden y deja constancia en el historial.
+      </div>
+
       {clientes.length === 0 && (
         <p className="alerta suave">
           Primero registra un <Link to="/clientes/nuevo">cliente</Link>.
@@ -73,10 +85,10 @@ export default function OrderForm() {
         </label>
         <label>
           Problema
-          <textarea value={problema} onChange={(e) => setProblema(e.target.value)} rows="3" required />
+          <textarea value={problema} onChange={(e) => setProblema(e.target.value)} rows="3" placeholder="Describe el síntoma reportado" required />
         </label>
         <label>
-          Fotos (opcional, máximo 3)
+          Fotos (máximo 3) · {fotos.length}/3
           <input type="file" accept="image/*" multiple onChange={cambiarFotos} />
         </label>
         {error && <div className="alerta" role="alert">{error}</div>}

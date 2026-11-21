@@ -21,16 +21,17 @@ export default function ClientForm() {
 
   return (
     <section className="tarjeta estrecha">
+      <span className="eyebrow">Recepción · Datos básicos</span>
       <h1>Nuevo cliente</h1>
-      <p>Los datos básicos se usan para identificar las órdenes.</p>
+      <p>Los datos básicos se usan para identificar las órdenes del taller.</p>
       <form onSubmit={enviar}>
         <label>
           Nombre
-          <input value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+          <input value={nombre} onChange={(e) => setNombre(e.target.value)} placeholder="Nombre y apellido" required />
         </label>
         <label>
           Teléfono
-          <input value={telefono} onChange={(e) => setTelefono(e.target.value)} required />
+          <input value={telefono} onChange={(e) => setTelefono(e.target.value)} placeholder="Ej. 600 000 000" required />
         </label>
         {error && <div className="alerta" role="alert">{error}</div>}
         <div className="acciones">
