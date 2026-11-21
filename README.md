@@ -10,6 +10,39 @@ Aplicación de gestión de órdenes de reparación construida con React + Vite e
 - `scripts/seed.mjs`: datos de prueba idempotentes.
 - `client/`: frontend React con React Router y `fetch`.
 
+```mermaid
+flowchart LR
+  subgraph Cliente["Frontend · React + Vite"]
+    Router["React Router"]
+    Dashboard["Dashboard"]
+    Forms["ClientForm / OrderForm"]
+    Orders["OrderList / OrderDetail / OrderHistory"]
+    Budget["BudgetPanel"]
+    Lib["src/lib/api.js · fetch"]
+
+    Router --> Dashboard
+    Router --> Forms
+    Router --> Orders
+    Orders --> Budget
+    Dashboard --> Lib
+    Forms --> Lib
+    Orders --> Lib
+  end
+
+  Lib -->|HTTP /api| Proxy["Vite proxy :5173"]
+  Proxy --> PB["PocketBase :8090"]
+
+  subgraph Backend["PocketBase"]
+    PB --> Hooks["pb_hooks/ordenes.pb.js"]
+    PB --> Collections[("clientes · ordenes · eventos")]
+    Hooks --> Utils["pb_hooks/utils.js"]
+    Hooks --> Collections
+    Migrations["pb_migrations"] --> Collections
+  end
+
+  Seed["scripts/seed.mjs"] --> PB
+```
+
 ## Backend con PocketBase
 
 Se requiere PocketBase v0.40.x.
@@ -68,6 +101,20 @@ npm run build
 - `/ordenes/:id`: detalle de la orden con pestaña de historial anidada.
 - `/ordenes/:id/historial`: cambios de etapa registrados por PocketBase.
 - Cualquier otra ruta muestra una página 404.
+
+## Capturas
+
+| Panel del taller | Consulta de órdenes |
+|---|---|
+| <a href="docs/screenshots/01-panel.png"><img src="docs/screenshots/01-panel.png" width="420" alt="Panel del taller"></a> | <a href="docs/screenshots/02-ordenes.png"><img src="docs/screenshots/02-ordenes.png" width="420" alt="Consulta de órdenes"></a> |
+
+| Detalle de orden | Historial de etapas |
+|---|---|
+| <a href="docs/screenshots/03-detalle.png"><img src="docs/screenshots/03-detalle.png" width="420" alt="Detalle de orden"></a> | <a href="docs/screenshots/04-historial.png"><img src="docs/screenshots/04-historial.png" width="420" alt="Historial de etapas"></a> |
+
+| Nueva orden |
+|---|
+| <a href="docs/screenshots/05-nueva-orden.png"><img src="docs/screenshots/05-nueva-orden.png" width="420" alt="Formulario de nueva orden"></a> |
 
 ## Reglas del taller
 
