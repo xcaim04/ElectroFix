@@ -79,6 +79,8 @@ npm run dev
 
 El servidor de desarrollo usa un proxy de Vite: las peticiones a `/api` se reenvían a `http://127.0.0.1:8090`.
 
+La interfaz aplica los tokens visuales de `Workshop Precision`. El botón de tema alterna entre modo claro y oscuro y guarda la preferencia en el navegador.
+
 Para apuntar a otro backend:
 
 ```bash
