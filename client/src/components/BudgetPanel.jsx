@@ -79,19 +79,23 @@ export default function BudgetPanel({ orden, onGuardado }) {
 
   return (
     <section className="tarjeta">
-      <h2>Presupuesto</h2>
+      <span className="eyebrow">Solo en diagnóstico</span>
+      <h2>Armar presupuesto</h2>
       <label>
         Diagnóstico
-        <textarea value={diagnostico} onChange={(e) => setDiagnostico(e.target.value)} rows="3" />
+        <textarea value={diagnostico} onChange={(e) => setDiagnostico(e.target.value)} rows="3" placeholder="Describe el fallo detectado y la solución propuesta" />
       </label>
       <label>
         Mano de obra
-        <input type="number" min="0" step="0.01" value={manoObra} onChange={(e) => setManoObra(e.target.value)} />
+        <div className="campo-sufijo">
+          <input type="number" min="0" step="0.01" value={manoObra} onChange={(e) => setManoObra(e.target.value)} />
+          <span>€</span>
+        </div>
       </label>
 
       <div className="piezas">
         <div className="piezas-cabecera">
-          <h3>Piezas</h3>
+          <h3>Repuestos</h3>
           <button type="button" className="boton secundario" onClick={() => setPiezas((actuales) => [...actuales, { descripcion: '', cantidad: 1, precio: 0 }])}>
             Añadir pieza
           </button>
@@ -126,11 +130,11 @@ export default function BudgetPanel({ orden, onGuardado }) {
         ))}
       </div>
 
-      <div className="total">Total calculado: <strong>{formatearMoneda(total)}</strong></div>
+      <div className="total">Total calculado <strong>{formatearMoneda(total)}</strong></div>
       <MensajeError mensaje={error} />
       <div className="acciones">
         <button type="button" className="boton secundario" onClick={() => guardar(null)}>Guardar borrador</button>
-        <button type="button" className="boton" onClick={() => guardar('presupuestada')}>Registrar presupuesto</button>
+        <button type="button" className="boton" onClick={() => guardar('presupuestada')}>Registrar y bloquear</button>
       </div>
     </section>
   );

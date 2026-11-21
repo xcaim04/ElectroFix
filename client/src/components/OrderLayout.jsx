@@ -29,16 +29,20 @@ export default function OrderLayout() {
       <section className="cabecera">
         <div>
           <Link className="volver" to="/ordenes">← Volver a órdenes</Link>
+          <span className="eyebrow">Orden de reparación · OT-{orden.id.slice(0, 6).toUpperCase()}</span>
           <h1>{orden.equipo}</h1>
           <p>
             {orden.expand?.cliente?.nombre || 'Cliente'} · <StatusBadge estado={orden.estado} />
           </p>
         </div>
+        <div className="cabecera-acciones">
+          <button type="button" className="boton secundario" onClick={() => window.print()}>Imprimir ficha</button>
+        </div>
       </section>
 
       <nav className="pestanas">
-        <NavLink to={`/ordenes/${id}`} end>Detalle</NavLink>
-        <NavLink to={`/ordenes/${id}/historial`}>Historial</NavLink>
+        <NavLink to={`/ordenes/${id}`} end>Detalle y presupuesto</NavLink>
+        <NavLink to={`/ordenes/${id}/historial`}>Historial de etapas</NavLink>
       </nav>
 
       <Outlet context={{ orden, recargar: cargar }} />

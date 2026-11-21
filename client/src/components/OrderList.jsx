@@ -26,6 +26,7 @@ export default function OrderList() {
     return ordenes.filter((orden) => {
       const coincideEstado = !estado || orden.estado === estado;
       const contenido = [
+        orden.id,
         orden.equipo,
         orden.problema,
         orden.expand?.cliente?.nombre || ''
@@ -41,10 +42,13 @@ export default function OrderList() {
     <>
       <section className="cabecera">
         <div>
+          <span className="eyebrow">Órdenes de reparación</span>
           <h1>Órdenes</h1>
-          <p>Consulta rápida por equipo, problema o cliente.</p>
+          <p>Consulta rápida por número de OT, equipo, problema o cliente.</p>
         </div>
-        <Link className="boton" to="/ordenes/nueva">Nueva orden</Link>
+        <div className="cabecera-acciones">
+          <Link className="boton" to="/ordenes/nueva">Nueva orden</Link>
+        </div>
       </section>
 
       <section className="tarjeta">
@@ -52,7 +56,7 @@ export default function OrderList() {
           <input
             value={busqueda}
             onChange={(e) => setBusqueda(e.target.value)}
-            placeholder="Buscar…"
+            placeholder="Buscar OT, equipo, cliente…"
             aria-label="Buscar órdenes"
           />
           <select value={estado} onChange={(e) => setEstado(e.target.value)} aria-label="Filtrar por estado">
@@ -69,17 +73,17 @@ export default function OrderList() {
         ) : (
           <div className="tabla">
             <div className="tabla-cabecera">
-              <span>Equipo</span>
+              <span>OT / Equipo</span>
               <span>Cliente</span>
               <span>Estado</span>
-              <span>Fecha</span>
+              <span>Ingreso</span>
               <span className="derecha">Presupuesto</span>
             </div>
             {visibles.map((orden) => (
               <Link className="tabla-fila" key={orden.id} to={`/ordenes/${orden.id}`}>
                 <span>
                   <strong>{orden.equipo}</strong>
-                  <small>{orden.problema}</small>
+                  <small>OT-{orden.id.slice(0, 6).toUpperCase()} · {orden.problema}</small>
                 </span>
                 <span>{orden.expand?.cliente?.nombre || '—'}</span>
                 <span><StatusBadge estado={orden.estado} /></span>
